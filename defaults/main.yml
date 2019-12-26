@@ -1,0 +1,24 @@
+init_db: 
+  mysql:
+    user: root
+    password: 123456
+
+  # postgrepsql:
+  #   user: postgres
+  #   password: ABCDEFG
+
+  # mongodb:
+  #   user: root
+  #   password: mongodb_pass
+
+
+init_application:
+  application_name: 
+  application_service:
+  application_database: 
+  application_database_user:
+  application_database_host: 
+  application_database_password: 
+  application_config_path: []
+
+
