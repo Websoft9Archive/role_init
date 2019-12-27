@@ -19,6 +19,8 @@ init_application:
   application_database_user:
   application_database_host: 
   application_database_password: 
+  application_random_password: #True or False
+  application_random_password_method: 
   application_config_path: []
 
 

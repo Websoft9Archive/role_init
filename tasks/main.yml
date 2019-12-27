@@ -35,3 +35,4 @@
     regexp: '/root/init.sh'
     line: '/root/init.sh'
     mode: 0750
+

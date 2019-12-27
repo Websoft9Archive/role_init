@@ -47,6 +47,14 @@ sed -i "s/{{init_application.application_database_password}}/$new_password/" {{p
 systemctl restart {{init_application.application_service}}
 {% endif %}
 {% endif %}
+
+{% if (init_application.application_random_password is defined) and  (init_application.application_random_password != none) and (init_application.application_random_password_method is defined) and  (init_application.application_random_password_method != none) %}
+{% if init_application.application_random_password  %}
+{% for method in  init_application.application_random_password_method %}}
+{{method}}
+{% endfor %}
+{% endif %}
+{% endif %}
 sed -i 's/\/root\/init.sh//g' /etc/rc.local
 rm -rf /root/init.sh
 {% endfor %}
