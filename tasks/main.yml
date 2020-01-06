@@ -27,12 +27,20 @@
 
   - name: restart rc.local
     service: name=rc.local state=restarted enabled=yes
+
+
+  - name: Setting Startup
+    lineinfile:
+      path: /etc/rc.local
+      regexp: '/root/init.sh'
+      line: '/root/init.sh'
+      mode: 0750
   when: ansible_distribution == 'Ubuntu'
 
 - name: Setting Startup
   lineinfile:
-    path: /etc/rc.local
+    path: /etc/rc.d/rc.local
     regexp: '/root/init.sh'
     line: '/root/init.sh'
     mode: 0750
-
+  when: ansible_distribution == 'Centos'
