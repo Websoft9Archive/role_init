@@ -5,7 +5,7 @@ new_password=$(pwgen -ncCs 10 1)
 systemctl start {{db_names}}
 {% if db_names == 'mysql' or db_names == 'mariadb' %}
 mysqladmin -u{{dbs.user}} -p{{dbs.password }} password $new_password
-{% if (init_application is defined) and (init_application is not none) %}
+{% if (init_application is defined) and (init_application.application_database_user is not none) %}
 mysqladmin -u{{init_application.application_database_user}} -p{{init_application.application_database_password}} password $new_password
 {% endif %}
 {% endif %}
