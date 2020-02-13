@@ -96,10 +96,10 @@ init_db:
 
 
 init_application:
-  example:
-    service: example
-    database: example
-    database_user: examplev
+  wordpress:
+    service: php-fpm
+    database: wordpress
+    database_user: wordpress
     database_host: 127.0.0.1
     database_password: 123456
     config_path: 
