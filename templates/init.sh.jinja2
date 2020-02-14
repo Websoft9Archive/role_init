@@ -57,7 +57,7 @@ systemctl restart {{app_attr.service}}
 {% endif %}
 
 {%for app_name,app_attr in init_application.items() %}
-{% if (app_attr.random_password is not none) and  (app_attr.random_password_method is not none) %}
+{% if (app_attr.random_password is defined) and  (app_attr.random_password_method is defined) %}
 {% if app_attr.random_password  %}
 {% for method in  app_attr.random_password_method %}
 {{method}}
