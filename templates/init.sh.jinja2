@@ -44,7 +44,7 @@ db.changeUserPassword('{{app_attr.database_user}}','$new_password')
 
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {%for app_name,app_attr in init_application.items() %}
-{% if app_attr.config_path is not none %}
+{% if app_attr.config_path is defined and app_attr.config_path is not none %}
 {% for path in app_attr.config_path %}
 sed -i "s/{{app_attr.database_password}}/$new_password/" {{path}}
 {% endfor %}
