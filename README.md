@@ -1,114 +1,69 @@
 Ansible Role: init_password
 =========
 
-在CentOS或者Ubuntu服务器上初始化随机密码
+本 Role 用于在在 CentOS, Ubuntu 和 AmazonLinux 服务器上初始化随机密码
 
-Requirements
-------------
+## Requirements
 
-无特殊要求,此 role 需要 root 用户权限,可以在playbook全局加入 `become: yes`,或者如下调用 role:
+运行本 Role，请确认符合如下的必要条件：
+
+| **Items**      | **Details** |
+| ------------------| ------------------|
+| Operating system | CentOS7.x Ubuntu AmazonLinux |
+| Python 版本 | Python2  |
+| Python 组件 |    |
+| Runtime | MySQL, MariaDB, PostgreSQL, MongoDB |
+
+
+## Related roles
+
+本 Role 在语法上引用了主变量，程序运行时需要确保已经运行： mysql | mariadb | postgresql | mongodb 等 Role。以 mysql 为例：
 
 ```
-- hosts: all
   roles:
-    - role: init_password
-      become: yes
-```
-
-Role Variables
---------------
-
-下面列出了可用变量和默认值(请参见"defaults/main.yml"):
-
-```
-init_db: 
-  mysql:
-    user: root
-    password: 123456
-
-  # postgrepsql:
-  #   user: postgres
-  #   password: ABCDEFG
-
-  # mongodb:
-  #   user: root
-  #   password: mongodb_pass
-
-
-init_application:
-  application:
-    service: 
-    database: 
-    database_user: 
-    database_host: 
-    database_password: 
-    random_password: 
-    default_account: 
-    default_password: 
-    random_password_method: 
-    config_path:
-
-
-
+   - {role: role_common, tags: "role_common"}   
+   - {role: role_cloud, tags: "role_cloud"}
+   - {role: role_mysql, tags: "role_mysql"}
+   - {role: role_docker, tags: "role_docker"}
+   - {role: role_docker_phpmyadmin, tags: "role_docker_phpmyadmin"}
+   - {role: role_init_password, tags: "role_init_password"} 
 ```
 
 
+## Variables
 
-Dependencies
-------------
+本 Role 主要变量以及使用方法如下：
 
-None
+| **Items**      | **Details** | **Format**  | **是否初始化** |
+| ------------------| ------------------|-----|-----|
+| init_db | mysql/mariadb/postgresql/moongodb[ user: username,  password: password ]   | 字典 | 否 |
+| init_application | [...]   | 字典 | 否 |
 
-Example Playbook
-----------------
+注意：
+1. init_application 和 init_application 初始化在项目主变量文件中统一修改。
+
+
+
+## Example
 
 ```
-- hosts: all
+- name: MySQL
+  hosts: all
   become: yes
+  become_method: sudo 
   vars_files:
-    - vars/main.yml
+    - vars/main.yml 
+
   roles:
-    - { role: mysql }
-    - { role: init_password }
+   - {role: role_common, tags: "role_common"}   
+   - {role: role_cloud, tags: "role_cloud"}
+   - {role: role_mysql, tags: "role_mysql"}
+   - {role: role_docker, tags: "role_docker"}
+   - {role: role_docker_phpmyadmin, tags: "role_docker_phpmyadmin"}
+   - {role: role_init_password, tags: "role_init_password"}
+   - {role: role_end, tags: "role_end"} 
 ```
 
-`vars/main.yml` :
-```
-mysql_version: 5.7
-mysql_root_password: 123456  
+## FAQ
 
-mysql_databases: 
-  - name: example 
-    encoding: utf8mb4
-
-  
-mysql_users: 
-  - name: example
-    host: locahost
-    password: example_password
-    priv: 'example.*:ALL'
-
-
-init_db: 
-  mysql:
-    user: root
-    password: 123456
-
-
-init_application:
-  wordpress:
-    service: php-fpm
-    database: wordpress
-    database_user: wordpress
-    database_host: 127.0.0.1
-    database_password: 123456
-    config_path: 
-      - xxx/xxxx
-
-```
-
-License
--------
-
-BSD
 
