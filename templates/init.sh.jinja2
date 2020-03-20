@@ -44,7 +44,16 @@ db.changeUserPassword('{{app_attr.database_user}}','$new_password')
 {% endif %}
 
 
+{% if db_names == "docker" %}
+docker-compose -f {{dbs.path}} down -v
+sed -i "s/{{dbs.password}}/$new_password/" {{dbs.path}}
+docker-compose -f {{dbs.path}} up -d
+{% endif %}
+
+{% if init_db.docker is undefined %}
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
+{% endif %}
+
 {% if init_application is not none %}
 {%for app_name,app_attr in init_application.items() %}
 {% if app_attr.config_path is defined and app_attr.config_path is not none %}
@@ -67,6 +76,7 @@ systemctl restart {{app_attr.service}}
 {% for method in  app_attr.random_password_method %}
 {{method}}
 {% endfor %}
+
 sed -i "s/{{ app_name }} Password: {{app_attr.default_password}}/{{ app_name }} Password: $new_password/" /credentials/password.txt
 {% endif %}
 {% endif %}

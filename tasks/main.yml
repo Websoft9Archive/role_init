@@ -1,13 +1,16 @@
-- name: Create credentials Folder
-  file:
-    path: /credentials
-    state: directory
+- block:
+  - name: Create credentials Folder
+    file:
+      path: /credentials
+      state: directory
 
-- name: Write Databases Password
-  template:
-    src: password.txt.jinja2
-    dest: /credentials/password.txt
-    mode: 644
+  - name: Write Databases Password
+    template:
+      src: password.txt.jinja2
+      dest: /credentials/password.txt
+      mode: 644
+  when: init_db.docker is undefined
+
 
 - name: Copy Init Script
   template:

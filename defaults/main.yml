@@ -10,7 +10,10 @@ init_db:
   # mongod:
   #   user: root
   #   password: mongodb_pass
-
+      
+  # docker:
+  #   password: '123456'
+  #   path: /root/1.yml # docker-compose.yml 
 
 init_application: 
   # application:  # application name
