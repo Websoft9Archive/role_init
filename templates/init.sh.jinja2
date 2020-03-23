@@ -38,7 +38,7 @@ db.changeUserPassword('{{dbs.user}}','$new_password')
 echo "
 use admin
 db.changeUserPassword('{{app_attr.database_user}}','$new_password')
-" | mongo -u {{dbs.user}} -p {{dbs.password}}
+" | mongo -u {{dbs.user}} -p $new_password
 {% endfor %}
 {% endif %}
 {% endif %}
