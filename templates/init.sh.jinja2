@@ -33,7 +33,7 @@ ALTER USER {{app_attr.database_user}} WITH PASSWORD '$new_password';
 sleep 10
 echo "
 use admin
-db.changeUserPassword('{{dbs.user}}','$new_password')
+db.changeUserPassword('{{dbs.user}}', $new_password)
 " | mongo -u {{dbs.user}} -p {{dbs.password}}
 {% if init_application is not none %}
 {%for app_name,app_attr in init_application.items() %}
