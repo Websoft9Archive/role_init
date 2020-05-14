@@ -36,11 +36,28 @@ Ansible Role: init_password
 
 | **Items**      | **Details** | **Format**  | **是否初始化** |
 | ------------------| ------------------|-----|-----|
-| init_db | mysql/mariadb/postgresql/moongodb[ user: username,  password: password ]   | 字典 | 否 |
+| init_db | 参考下方  | 字典 | 否 |
 | init_application | [...]   | 字典 | 否 |
 
 注意：
 1. init_application 和 init_application 初始化在项目主变量文件中统一修改。
+2. 默认管理员密码初始化范例
+  ```
+  init_db: 
+    mongodb:
+      user: root
+      password: "123456"
+
+  init_db: 
+    mysql:
+      user: root
+      password: "123456"
+
+  init_db: 
+    postgresql:
+      user: root
+      password: "123456"
+  ```
 
 
 
