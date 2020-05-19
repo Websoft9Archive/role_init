@@ -30,6 +30,7 @@ ALTER USER {{app_attr.database_user}} WITH PASSWORD '$new_password';
 {% endif %}
 
 {% if db_names == 'mongodb' %}
+sudo sh -c 'echo "init mongodb starting"  1>> /tmp/init_debug.txt'
 sleep 10
 echo "
 use admin
