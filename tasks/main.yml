@@ -27,4 +27,4 @@
 - name: Enable service
   service:
     name: init_password
-    state: enabled
+    enabled: yes
