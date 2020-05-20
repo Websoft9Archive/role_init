@@ -20,9 +20,9 @@
     
 - name: Copy init_password.service
   template:
-    src: init_password
+    src: init_password.service
     dest: /usr/lib/systemd/system/
-    mode: 0750
+    mode: 0644
     
 - name: Enable service
   service:
