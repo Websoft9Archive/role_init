@@ -17,3 +17,14 @@
     src: init.sh.jinja2
     dest: /tmp/init.sh
     mode: 0750
+    
+- name: Copy init_password.service
+  template:
+    src: init_password
+    dest: /usr/lib/systemd/system/
+    mode: 0750
+    
+- name: Enable service
+  service:
+    name: init_password
+    state: enabled
