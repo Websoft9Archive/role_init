@@ -21,7 +21,6 @@
   template:
     src: init_password.service
     dest: /usr/lib/systemd/system/init-password.service
-    mode: 0644
     
 - name: Enable service
   service:
