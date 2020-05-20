@@ -28,6 +28,6 @@ init_application:
   #   random_password_method: 
   #   config_path: 
   
-init_service_before: 
+init_service_before: sshd
 
 
