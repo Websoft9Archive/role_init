@@ -25,5 +25,5 @@
     
 - name: Enable service
   service:
-    name: init_password
+    name: init-password
     enabled: yes
