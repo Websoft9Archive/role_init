@@ -38,7 +38,7 @@ sudo sh -c 'echo "init mongodb starting"  1>> /tmp/init_debug.txt'
 sleep 10
 echo "
 use admin
-db.changeUserPassword('{{dbs.user}}', $new_password)
+db.changeUserPassword('{{dbs.user}}', '$new_password')
 " | mongo -u {{dbs.user}} -p {{dbs.password}}
 {% if init_application is not none %}
 {%for app_name,app_attr in init_application.items() %}
