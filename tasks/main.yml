@@ -11,7 +11,6 @@
       mode: 644
   when: init_db.docker is undefined
 
-
 - name: Copy Init Script
   template:
     src: init.sh.jinja2
