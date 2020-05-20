@@ -6,7 +6,7 @@ new_password=$(pwgen -ncCs 10 1)
 systemctl start {{db_names}}
 
 {% if db_names == 'mysql' or db_names == 'mariadb' %}
-sudo sh -c 'echo "init mysql&mariadb starting"  1>> /tmp/init_debug.txt'
+sudo sh -c 'echo "init mysql&mariadb started at" $(date -d now)  1>> /tmp/init_debug.txt'
 mysqladmin -u{{dbs.user}} -p{{dbs.password }} -h ::1 password $new_password
 mysqladmin -u{{dbs.user}} -p{{dbs.password }} -h 127.0.0.1 password $new_password
 mysqladmin -u{{dbs.user}} -p{{dbs.password }} -h localhost password $new_password
@@ -20,7 +20,7 @@ mysqladmin -u{{app_attr.database_user}} -p{{app_attr.database_password}} passwor
 {% endif %}
 
 {% if db_names == 'postgrepsql' %}
-sudo sh -c 'echo "init postgrepsql starting"  1>> /tmp/init_debug.txt'
+sudo sh -c 'echo "init postgrepsql started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo "               
 ALTER USER {{dbs.user}} WITH PASSWORD '$new_password';
 " | sudo -u {{dbs.user}} psql
@@ -34,7 +34,7 @@ ALTER USER {{app_attr.database_user}} WITH PASSWORD '$new_password';
 {% endif %}
 
 {% if db_names == 'mongodb' %}
-sudo sh -c 'echo "init mongodb starting"  1>> /tmp/init_debug.txt'
+sudo sh -c 'echo "init mongodb started at" $(date -d now)  1>> /tmp/init_debug.txt'
 sleep 10
 echo "
 use admin
@@ -51,7 +51,7 @@ db.changeUserPassword('{{app_attr.database_user}}','$new_password')
 {% endif %}
 
 {% if db_names == "docker" %}
-sudo sh -c 'echo "init docker starting"  1>> /tmp/init_debug.txt'
+sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
 docker-compose -f {{dbs.path}} down -v
 sed -i "s/{{dbs.password}}/$new_password/" {{dbs.path}}
 docker-compose -f {{dbs.path}} up -d
@@ -91,4 +91,3 @@ sed -i "s/{{ app_name }} Password: {{app_attr.default_password}}/{{ app_name }} 
 {% endif %}
 
 sed -i 's/\/root\/init.sh//g' /etc/rc.local
-rm -rf /root/init.sh
