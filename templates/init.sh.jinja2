@@ -3,7 +3,6 @@ new_password=$(pwgen -ncCs 10 1)
 
 {% if init_db is not none %}
 {% for db_names,dbs in init_db.items() %}
-systemctl start {{db_names}}
 
 {% if db_names == 'mysql' or db_names == 'mariadb' %}
 sudo sh -c 'echo "init mysql&mariadb started at" $(date -d now)  1>> /tmp/init_debug.txt'
