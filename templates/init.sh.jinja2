@@ -35,7 +35,6 @@ ALTER USER {{app_attr.database_user}} WITH PASSWORD '$new_password';
 
 {% if db_names == 'mongodb' %}
 sudo sh -c 'echo "init mongodb started at" $(date -d now)  1>> /tmp/init_debug.txt'
-sleep 10
 echo "
 use admin
 db.changeUserPassword('{{dbs.user}}', '$new_password')
