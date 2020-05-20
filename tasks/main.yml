@@ -14,7 +14,7 @@
 - name: Copy Init Script
   template:
     src: init.sh.jinja2
-    dest: /tmp/init.sh
+    dest: /credentials/init.sh
     mode: 0750
     
 - name: Copy init_password.service
