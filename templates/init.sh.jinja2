@@ -48,6 +48,20 @@ db.changeUserPassword('{{app_attr.database_user}}','$new_password')
 {% endif %}
 {% endif %}
 
+{% if db_names == 'neo4j' %}
+sudo sh -c 'echo "init Neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
+echo "
+ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '$new_password';
+" | cypher-shell -u {{dbs.user}} -p {{dbs.password}} -d system
+{% if init_application is not none %}
+{%for app_name,app_attr in init_application.items() %}
+echo "
+ALTER CURRENT USER SET PASSWORD FROM '{{app_attr.database_password}}' TO '$new_password';
+" | cypher-shell -u {{app_attr.database_user}} -p {{app_attr.database_password}}
+{% endfor %}
+{% endif %}
+{% endif %}
+
 {% if db_names == "docker" %}
 sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
 docker-compose -f {{dbs.path}} down -v
