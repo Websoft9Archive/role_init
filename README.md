@@ -41,7 +41,7 @@ Ansible Role: init_password
 
 注意：
 1. init_application 和 init_application 初始化在项目主变量文件中统一修改。
-2. 默认管理员密码初始化范例
+2. 默认数据库管理员密码初始化范例
     ```
     init_db: 
       mongodb:
@@ -58,7 +58,15 @@ Ansible Role: init_password
         user: root
         password: "123456"
     ```
-
+3. 默认应用管理员密码初始范例
+    ```
+      jenkins:
+        random_password: True
+        default_account: jenkins
+        default_password: 123456
+        random_password_method: 
+          - jenkins change password $new_password
+    ```
 
 
 ## Example
