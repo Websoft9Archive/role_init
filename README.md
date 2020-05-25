@@ -91,25 +91,6 @@ Ansible Role: init_password
 
 ## 说明
 
-**随机密码生成统一采用**
-
-  `pwgen -ncCs 10 1`
-
-```
-参数：
--c or –capitalize
-密码中至少包含一个大写字母
-
--n or –numerals
-密码中至少包含一个数字
-
--C
-在列中打印生成的密码
-
--s or –secure
-生成完全随机密码
-```
-
 ### 数据库额外变量(用于创建数据库和用户)
 ```
 额外创建的数据库用户
@@ -165,10 +146,26 @@ mysql role 判断以上变量是否有值和变量是否定义,未定义变量�
     extra_db: '{{db_user.stdout}}'
     extra_db_password: '{{db_pass.stdout}}'
 
-
-
 ```
 
 ## FAQ
 
+#### 当前的随机密码采用什么算法？
+
+当前采用 `pwgen -ncCs 10 1` 生成随机密码
+
+```
+参数：
+-c or –capitalize
+密码中至少包含一个大写字母
+
+-n or –numerals
+密码中至少包含一个数字
+
+-C
+在列中打印生成的密码
+
+-s or –secure
+生成完全随机密码
+```
 
