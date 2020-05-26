@@ -1,3 +1,7 @@
+- set_fact:
+    init_service_before: "{{php_runtime_meta[ansible_os_family][phpapps_webs].vhost_dir}}"
+    init_service_after: "{{php_runtime_meta[ansible_os_family][phpapps_webs].vhost_src}}"
+    
 - block:
   - name: Create credentials Folder
     file:
