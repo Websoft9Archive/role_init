@@ -28,7 +28,19 @@ init_application:
   #   random_password_method: 
   #   config_path: 
   
-init_service_before: sshd
+init_service_unit: 
+  mysql:
+    before: mysqld
+    after:
+  mariadb:
+    before: mysqld
+    after:
+  mongdodb:
+    before:
+    after:
+  postgresql:
+    before:
+    after:
     
 
 
