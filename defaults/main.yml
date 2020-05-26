@@ -30,17 +30,20 @@ init_application:
   
 init_service_unit: 
   mysql:
-    before: mysqld
-    after:
+    before: 
+    after: mysqld.service
   mariadb:
-    before: mysqld
-    after:
+    before: 
+    after: mysqld.service
   mongdodb:
-    before:
-    after:
+    before: 
+    after: mongod.service
   postgresql:
     before:
-    after:
+    after: postgresql.service
+  neo4j:
+    before:
+    after: neo4j.service
     
 
 
