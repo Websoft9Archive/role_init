@@ -45,27 +45,25 @@ Ansible Role: init_password
     ```
     init_db: 
       mongodb:
-        user: root
+        admin: root
+        user: ["react"]
         password: "123456"
 
     init_db: 
       mysql:
-        user: root
+        admin: root
+        user: ["wordpress","discuz"]
         password: "123456"
 
     init_db: 
       postgresql:
-        user: root
+        admin: root
+        user: ["wordpress","discuz"]
         password: "123456"
     ```
 3. 默认应用管理员密码初始范例（此方案只适用于修改文件）
     ```
-    wordpress:
-      database: wordpress 
-      database_user: wordpress
-      database_host: localhost
-      database_password: "123456"
-      
+    wordpress:      
       random_password: True
       default_account: admin
       default_password: 123456
