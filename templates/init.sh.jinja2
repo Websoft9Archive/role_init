@@ -4,16 +4,15 @@ new_password=$(pwgen -ncCs 10 1)
 {% if init_db is not none %}
 {% for db_names,dbs in init_db.items() %}
 
+
 {% if db_names == 'mysql' or db_names == 'mariadb' %}
 sudo sh -c 'echo "init mysql&mariadb started at" $(date -d now)  1>> /tmp/init_debug.txt'
-mysqladmin -u{{dbs.user}} -p{{dbs.password }} -h ::1 password $new_password
-mysqladmin -u{{dbs.user}} -p{{dbs.password }} -h 127.0.0.1 password $new_password
-mysqladmin -u{{dbs.user}} -p{{dbs.password }} -h localhost password $new_password
-{% if init_application is not none %}
-{%for app_name,app_attr in init_application.items() %}
-{% if app_attr.database_user is not none %}
-mysqladmin -u{{app_attr.database_user}} -p{{app_attr.database_password}} password $new_password
-{% endif %}
+mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h ::1 password $new_password
+mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h 127.0.0.1 password $new_password
+mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_password
+{% if db.user is not none %}
+{% for db_app_user in db.user.items() %}
+mysqladmin -u{{db_app_user}} -p{{dbs.password}} password $new_password
 {% endfor %}
 {% endif %}
 {% endif %}
