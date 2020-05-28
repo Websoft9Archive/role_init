@@ -64,6 +64,8 @@ Ansible Role: init_password
         random_password: True
         default_account: jenkins
         default_password: 123456
+        service_before:
+        service_after:
         random_password_method: 
           - jenkins change password $new_password
     ```
