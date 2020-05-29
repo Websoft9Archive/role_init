@@ -60,9 +60,9 @@ Ansible Role: init_password
         admin: root
         user: ["wordpress","discuz"]
         password: "123456"
-        init_db: 
         
-    docker:
+    init_db:   
+      docker:
         password: "123456"
         path: /data/compose.yml
     ```
