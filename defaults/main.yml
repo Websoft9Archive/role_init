@@ -35,7 +35,7 @@ init_service_unit:
   mariadb:
     before: 
     after: mysqld.service
-  mongdodb:
+  mongodb:
     before: 
     after: mongod.service
   postgresql:
