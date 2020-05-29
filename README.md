@@ -75,9 +75,21 @@ Ansible Role: init_password
         service_after: php-fpm.service
         config_paths: 
           - /data/wwwroot/wordpress/wp-config.php
+          - /data/wwwroot/wordpress/wp-config2.php
         commands: 
           - wp change -u default_account -p default_password to $new_password
           - systemctl restart xxxx  
+          
+       discuz:      
+         password: 123456
+         service_before:
+         service_after: php-fpm.service
+         config_paths: 
+            - /data/wwwroot/wordpress/wp-config.php
+            - /data/wwwroot/wordpress/wp-config3.php
+         commands: 
+            - wp change -u default_account -p default_password to $new_password
+            - systemctl restart xxxx  
     ```
 
 
