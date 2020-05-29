@@ -23,7 +23,7 @@
     
 - name: Copy init_password.service
   template:
-    src: init-password.jinja2
+    src: init-password.service.jinja2
     dest: /lib/systemd/system/init-password.service
     
 - name: Enable service
