@@ -69,8 +69,9 @@ Ansible Role: init_password
 3. 默认应用管理员密码初始范例（此方案只适用于修改文件）
     ```
     init_application:
-      wordpress:      
-        password: 123456
+      wordpress:
+        username: admin
+        password: "123456"
         service_before:
         service_after: php-fpm.service
         config_paths: 
@@ -80,8 +81,9 @@ Ansible Role: init_password
           - wp change -u default_account -p default_password to $new_password
           - systemctl restart xxxx  
           
-       discuz:      
-         password: 123456
+       discuz:   
+         username: admin
+         password: "123456"
          service_before:
          service_after: php-fpm.service
          config_paths: 
