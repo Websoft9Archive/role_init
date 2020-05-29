@@ -60,6 +60,11 @@ Ansible Role: init_password
         admin: root
         user: ["wordpress","discuz"]
         password: "123456"
+        init_db: 
+        
+    docker:
+        password: "123456"
+        path: /data/compose.yml
     ```
 3. 默认应用管理员密码初始范例（此方案只适用于修改文件）
     ```
