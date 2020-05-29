@@ -20,6 +20,7 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 
 
 {% if db_names == 'mongodb' %}
+sleep 10s
 sudo sh -c 'echo "init mongodb started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo "
 use admin
