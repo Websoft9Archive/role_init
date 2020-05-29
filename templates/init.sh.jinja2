@@ -24,13 +24,13 @@ sudo sh -c 'echo "init mongodb started at" $(date -d now)  1>> /tmp/init_debug.t
 echo "
 use admin
 db.changeUserPassword('{{dbs.admin}}', '$new_password')
-" | mongo -u {{dbs.admin}} -p {{dbs.password}}
+" | mongo admin -u {{dbs.admin}} -p {{dbs.password}}
 {% if dbs.user is defined and dbs.user is not none %}
 {% for dbs_app_user in dbs.user %}
 echo "
 use admin
 db.changeUserPassword('{{dbs_app_user}}', '$new_password')
-" | mongo -u {{dbs_app_user}} -p {{dbs.password}}
+" | mongo admin -u {{dbs_app_user}} -p {{dbs.password}}
 {% endfor %}
 {% endif %}
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
