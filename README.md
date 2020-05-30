@@ -46,25 +46,25 @@ Ansible Role: init_password
     init_db: 
       mongodb:
         admin: root
-        user: ["react"]
+        users: ["react"]
         password: "123456"
 
     init_db: 
       mysql:
         admin: root
-        user: ["wordpress","discuz"]
+        users: ["wordpress","discuz"]
         password: "123456"
 
     init_db: 
       postgresql:
         admin: root
-        user: ["wordpress","discuz"]
+        users: ["wordpress","discuz"]
         password: "123456"
         
     init_db: 
       mysql:
         admin: root
-        user: ["discuz"]
+        users: ["discuz"]
         password: "123456"  
         config_path:
         - /data/wwwroot/discuz/upload/config/config_global_default.php
