@@ -66,7 +66,7 @@ Ansible Role: init_password
         admin: root
         users: ["discuz"]
         password: "123456"  
-        config_path:
+        config_paths:
         - /data/wwwroot/discuz/upload/config/config_global_default.php
         
     init_db:   
