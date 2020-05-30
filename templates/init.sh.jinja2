@@ -11,8 +11,8 @@ sudo sh -c 'echo "init mysql&mariadb started at" $(date -d now)  1>> /tmp/init_d
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h ::1 password $new_password
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h 127.0.0.1 password $new_password
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_password
-{% if dbs.user is defined and dbs.user is not none %}
-{% for dbs_app_user in dbs.user %}
+{% if dbs.users is defined and dbs.users is not none %}
+{% for dbs_app_user in dbs.users %}
 mysqladmin -u{{dbs_app_user}} -p{{dbs.password}} password $new_password
 {% endfor %}
 
@@ -34,8 +34,8 @@ use admin
 db.changeUserPassword('{{dbs.admin}}', '${new_password}')
 exit
 " | mongo admin -u {{dbs.admin}} -p {{dbs.password}}
-{% if dbs.user is defined and dbs.user is not none %}
-{% for dbs_app_user in dbs.user %}
+{% if dbs.users is defined and dbs.users is not none %}
+{% for dbs_app_user in dbs.users %}
 echo "
 use admin
 db.changeUserPassword('{{dbs_app_user}}', '${new_password}')
@@ -52,8 +52,8 @@ sudo sh -c 'echo "init postgresql started at" $(date -d now)  1>> /tmp/init_debu
 echo "               
 ALTER USER {{dbs.admin}} WITH PASSWORD '${new_password}';
 " | sudo -u {{dbs.admin}} psql
-{% if dbs.user is defined and dbs.user is not none %}
-{% for dbs_app_user in dbs.user %}
+{% if dbs.users is defined and dbs.users is not none %}
+{% for dbs_app_user in dbs.users %}
 echo "               
 ALTER USER {{dbs_app_user}} WITH PASSWORD '${new_password}';
 " | sudo -u {{dbs.admin}} psql
@@ -66,8 +66,8 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% if db_names == 'neo4j' %}
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo " ${new_password}" | cypher-shell -u {{dbs.admin}} -p {{dbs.password}} -d system
-{% if dbs.user is defined and dbs.user is not none %}
-{% for dbs_app_user in dbs.user %}
+{% if dbs.users is defined and dbs.users is not none %}
+{% for dbs_app_user in dbs.users %}
 echo "
 ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 " | cypher-shell -u {{dbs_app_user}} -p {{dbs.password}} -d system
