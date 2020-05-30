@@ -61,6 +61,14 @@ Ansible Role: init_password
         user: ["wordpress","discuz"]
         password: "123456"
         
+    init_db: 
+      mysql:
+        admin: root
+        user: ["discuz"]
+        password: "123456"  
+        config_path:
+        - /data/wwwroot/discuz/upload/config/config_global_default.php
+        
     init_db:   
       docker:
         password: "123456"
