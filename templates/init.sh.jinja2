@@ -57,6 +57,7 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 
 
 {% if db_names == 'neo4j' %}
+sleep 10s
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo " ${new_password}" | cypher-shell -u {{dbs.admin}} -p {{dbs.password}} -d system
 {% if dbs.user is defined and dbs.user is not none %}
