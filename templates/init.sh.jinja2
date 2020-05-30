@@ -1,5 +1,6 @@
 #!/bin/bash
 new_password=$(pwgen -ncCs 15 1)
+sleep 10s
 
 #1 database password init
 {% if init_db is not none %}
@@ -20,7 +21,6 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 
 
 {% if db_names == 'mongodb' %}
-sleep 10s
 sudo sh -c 'echo "init mongodb started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo "
 use admin
@@ -57,7 +57,6 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 
 
 {% if db_names == 'neo4j' %}
-sleep 10s
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo " ${new_password}" | cypher-shell -u {{dbs.admin}} -p {{dbs.password}} -d system
 {% if dbs.user is defined and dbs.user is not none %}
