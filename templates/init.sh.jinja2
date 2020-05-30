@@ -15,6 +15,13 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 {% for dbs_app_user in dbs.user %}
 mysqladmin -u{{dbs_app_user}} -p{{dbs.password}} password $new_password
 {% endfor %}
+
+{% if dbs.config_paths is defined and dbs.config_paths is not none %}
+{% for path in dbs.config_paths %}
+sed -i "s/{{dbs.password}}/$new_password/" {{path}}
+{% endfor %}
+{% endif %}
+
 {% endif %}
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
