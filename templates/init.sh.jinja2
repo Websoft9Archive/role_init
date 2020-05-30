@@ -58,9 +58,7 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 
 {% if db_names == 'neo4j' %}
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
-echo "
-ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
-" | cypher-shell -u {{dbs.admin}} -p {{dbs.password}} -d system
+echo " ${new_password}" | cypher-shell -u {{dbs.admin}} -p {{dbs.password}} -d system
 {% if dbs.user is defined and dbs.user is not none %}
 {% for dbs_app_user in dbs.user %}
 echo "
@@ -68,7 +66,7 @@ ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 " | cypher-shell -u {{dbs_app_user}} -p {{dbs.password}} -d system
 {% endfor %}
 {% endif %}
-sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password: $new_password/" /credentials/password.txt
+sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/" /credentials/password.txt
 {% endif %}
 
 
