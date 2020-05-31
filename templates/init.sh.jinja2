@@ -93,7 +93,7 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 
 
 #2 application password init
-{% if init_application is not none %}
+{% if init_application %}
 {% for app_name,app_attr in init_application.items() %}
 
 {% if app_attr.config_paths %}
