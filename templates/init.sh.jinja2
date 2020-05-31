@@ -34,7 +34,7 @@ use admin
 db.changeUserPassword('{{dbs.admin}}', '${new_password}')
 exit
 " | mongo admin -u {{dbs.admin}} -p {{dbs.password}}
-{% if dbs.users %}
+{% if dbs.users is defined and dbs.users is not none %}
 {% for dbs_app_user in dbs.users %}
 echo "
 use admin
@@ -52,7 +52,7 @@ sudo sh -c 'echo "init postgresql started at" $(date -d now)  1>> /tmp/init_debu
 echo "               
 ALTER USER {{dbs.admin}} WITH PASSWORD '${new_password}';
 " | sudo -u {{dbs.admin}} psql
-{% if dbs.users %}
+{% if dbs.users is defined and dbs.users is not none %}
 {% for dbs_app_user in dbs.users %}
 echo "               
 ALTER USER {{dbs_app_user}} WITH PASSWORD '${new_password}';
@@ -69,7 +69,7 @@ echo "
 {{dbs.admin}}
 {{dbs.password}} 
 ${new_password}" | cypher-shell
-{% if dbs.users %}
+{% if dbs.users is defined and dbs.users is not none %}
 {% for dbs_app_user in dbs.users %}
 echo "
 ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
@@ -102,7 +102,7 @@ sed -i "s/{{app_attr.password}}/$new_password/" {{path}}
 {% endfor %}
 {% endif %}
 
-{% if app_attr.commands %}
+{% if app_attr.commands is defined and app_attr.commands is not none %}
 {% for cmd in app_attr.commands %}
 {{cmd}}
 {% endfor %}
