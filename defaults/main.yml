@@ -1,5 +1,6 @@
-#init_db:
-#init_application:  
+init_db:
+init_application:
+
 init_service_unit: 
   mysql:
     before: 
