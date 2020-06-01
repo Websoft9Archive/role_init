@@ -100,8 +100,17 @@ Ansible Role: init_password
          commands: 
             - wp change -u default_account -p default_password to $new_password
             - systemctl restart xxxx  
+       
+    init_application:
+      grafana:
+        username: admin
+        password: "admin"
+        service_before:
+        service_after: grafana-server
+        commands: 
+          - grafana-cli admin reset-admin-password $new_password
+          - sed -i "s/grafana administrator password:{{dbs.password}}/grafana administrator password:$new_password/" /credentials/password.txt
     ```
-
 
 ## Example
 
