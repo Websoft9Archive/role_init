@@ -60,6 +60,14 @@ Ansible Role: init_password
         admin: root
         users: ["wordpress","discuz"]
         password: "123456"
+        service_before:
+        service_after: php-fpm.service
+    
+    init_db: 
+      postgresql:
+        admin: root
+        users: ["wordpress","discuz"]
+        password: "123456"
         
     init_db: 
       mysql:
