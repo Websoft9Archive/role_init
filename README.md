@@ -133,22 +133,7 @@ Ansible Role: init_password
 
 ## FAQ
 
-#### 当前的随机密码采用什么算法？
+#### 采用哪种方式实现开机运行一次？
 
-当前采用 `pwgen -ncCs 10 1` 生成随机密码
-
-```
-参数：
--c or –capitalize
-密码中至少包含一个大写字母
-
--n or –numerals
-密码中至少包含一个数字
-
--C
-在列中打印生成的密码
-
--s or –secure
-生成完全随机密码
-```
+systemd
 
