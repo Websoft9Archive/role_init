@@ -108,8 +108,7 @@ Ansible Role: init_password
         service_before:
         service_after: grafana-server
         commands: 
-          - grafana-cli admin reset-admin-password $new_password
-          - sed -i "s/grafana administrator password:{{dbs.password}}/grafana administrator password:$new_password/" /credentials/password.txt
+          - grafana-cli admin reset-admin-password $new_password        
     ```
 
 ## Example
