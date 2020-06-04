@@ -79,26 +79,47 @@ ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/" /credentials/password.txt
 {% endif %}
 
-
-{% if db_names == "docker" %}
-sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
-docker-compose -f {{dbs.path}} down -v
-sed -i "s/{{dbs.password}}/$new_password/" {{dbs.path}}
-docker-compose -f {{dbs.path}} up -d
-sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
-{% endif %}
-
 {% endfor %}
 {% endif %}
 
 
 #2 application password init
 {% if init_application %}
+sudo sh -c 'echo "init application started at" $(date -d now)  1>> /tmp/init_debug.txt'
 {% for app_name,app_attr in init_application.items() %}
 
 {% if app_attr.config_paths is defined and app_attr.config_paths is not none %}
 {% for path in app_attr.config_paths %}
 sed -i "s/{{app_attr.password}}/$new_password/" {{path}}
+{% endfor %}
+{% endif %}
+
+{% if app_attr.commands is defined and app_attr.commands is not none %}
+{% for cmd in app_attr.commands %}
+{{cmd}}
+{% endfor %}
+{% endif %}
+
+sed -i "s/{{ app_name }} administrator Password: {{app_attr.password}}/{{ app_name }} administrator Password: $new_password/" /credentials/password.txt
+{% endfor %}
+{% endif %}
+
+#3 docker password init
+{% if init_docker %}
+sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
+{% for app_name,app_attr in init_docker.items() %}
+
+{% if app_attr.config_paths is defined and app_attr.config_paths is not none %}
+{% for path in app_attr.config_paths %}
+sed -i "s/{{app_attr.password}}/$new_password/" {{path}}
+{% endfor %}
+{% endif %}
+
+{% if app_attr.compose_paths is defined and app_attr.compose_paths is not none %}
+{% for path in app_attr.compose_paths %}
+docker-compose -f {{path}} down -v
+sed -i "s/{{app_attr.password}}/$new_password/" {{path}}
+docker-compose -f {{path}} up -d
 {% endfor %}
 {% endif %}
 
