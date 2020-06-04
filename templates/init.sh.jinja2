@@ -11,7 +11,7 @@ sudo sh -c 'echo "init mysql&mariadb started at" $(date -d now)  1>> /tmp/init_d
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h ::1 password $new_password
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h 127.0.0.1 password $new_password
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_password
-{% if dbs.users %}
+{% if dbs.users is defined and dbs.users is not none %}
 {% for dbs_app_user in dbs.users %}
 mysqladmin -u{{dbs_app_user}} -p{{dbs.password}} password $new_password
 {% endfor %}
