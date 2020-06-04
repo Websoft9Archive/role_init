@@ -76,11 +76,6 @@ Ansible Role: init_password
         password: "123456"  
         config_paths:
         - /data/wwwroot/discuz/upload/config/config_global_default.php
-        
-    init_db:   
-      docker:
-        password: "123456"
-        path: /data/compose.yml
     ```
 3. 默认应用管理员密码初始范例（此方案只适用于修改文件）
     ```
@@ -117,6 +112,22 @@ Ansible Role: init_password
         service_after: grafana-server
         commands: 
           - grafana-cli admin reset-admin-password $new_password        
+    ```
+4. 默认Docker应用管理员密码初始范例（此方案适用于修改Docker相关）
+    ```
+    init_docker:     
+       aws:   
+         username: admin
+         password: "password"
+         service_before:
+         service_after: docker.service
+         config_paths: 
+           - /data/.awx/wp-config.php
+         compose_paths: 
+           - /data/.awx/docker-compose.yml
+         commands: 
+            - wp change -u default_account -p default_password to $new_password
+            - systemctl restart xxxx        
     ```
 
 ## Example
