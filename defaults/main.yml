@@ -1,7 +1,9 @@
+# dictionary variable for interface
 init_db:
 init_application:
 init_docker:
 
+# these meta data ony for inner coding, not for interface
 init_service_unit: 
   mysql:
     before: 
