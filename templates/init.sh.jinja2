@@ -111,14 +111,30 @@ sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.tx
 
 {% if app_attr.config_paths is defined and app_attr.config_paths is not none %}
 {% for path in app_attr.config_paths %}
-sed -i "s/{{app_attr.password}}/$new_password/" {{path}}
+
+{% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
+sed -i "s/{{app_attr.admin_password}}/$new_password/" {{path}}
+{% endif %}
+
+{% if app_attr.db_password is defined and app_attr.db_password is not none %}
+sed -i "s/{{app_attr.db_password}}/$new_password/" {{path}}
+{% endif %}
+
 {% endfor %}
 {% endif %}
 
 {% if app_attr.compose_paths is defined and app_attr.compose_paths is not none %}
 {% for path in app_attr.compose_paths %}
 docker-compose -f {{path}} down -v
-sed -i "s/{{app_attr.password}}/$new_password/" {{path}}
+
+{% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
+sed -i "s/{{app_attr.admin_password}}/$new_password/" {{path}}
+{% endif %}
+
+{% if app_attr.db_password is defined and app_attr.db_password is not none %}
+sed -i "s/{{app_attr.db_password}}/$new_password/" {{path}}
+{% endif %}
+
 docker-compose -f {{path}} up -d
 {% endfor %}
 {% endif %}
