@@ -145,6 +145,6 @@ docker-compose -f {{path}} up -d
 {% endfor %}
 {% endif %}
 
-sed -i "s/{{ app_name }} administrator Password: {{app_attr.password}}/{{ app_name }} administrator Password: $new_password/" /credentials/password.txt
+sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/" /credentials/password.txt
 {% endfor %}
 {% endif %}
