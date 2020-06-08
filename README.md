@@ -115,19 +115,19 @@ Ansible Role: init_password
     ```
 4. 默认Docker应用管理员密码初始范例（此方案适用于修改Docker相关）
     ```
-    init_docker:     
-       aws:   
-         username: admin
-         password: "password"
-         service_before:
-         service_after: docker.service
+    init_docker:
+       awx:
+         admin_username: admin
+         admin_password: "password"
+         db: postgresql
+         db_name: awx
+         db_username: awx
+         db_password: "awxpass"
+         service_after: "docker.service"
          config_paths: 
-           - /data/.awx/wp-config.php
-         compose_paths: 
-           - /data/.awx/docker-compose.yml
-         commands: 
-            - wp change -u default_account -p default_password to $new_password
-            - systemctl restart xxxx        
+           - "/data/.awx/environment.sh"
+           - "/data/.awx/credentials.py"
+         compose_path: "/data/.awx/docker-compose.yml"      
     ```
 
 ## Example
