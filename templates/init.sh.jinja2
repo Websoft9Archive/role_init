@@ -119,21 +119,23 @@ sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ 
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
 sed -i "s/{{app_attr.db_password}}/$new_password/" {{path}}
+sed -i "s/{{app_attr.db_password}}/$new_password/" /credentials/password.txt
 {% endif %}
 
 {% endfor %}
 {% endif %}
 
-{% if app_attr.compose_paths is defined and app_attr.compose_paths is not none %}
+{% if app_attr.compose_path is defined and app_attr.compose_path is not none %}
 docker-compose -f {{path}} down -v
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
-sed -i "s/{{app_attr.admin_password}}/$new_password/" {{app_attr.compose_paths}}
+sed -i "s/{{app_attr.admin_password}}/$new_password/" {{app_attr.compose_path}}
 sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
-sed -i "s/{{app_attr.db_password}}/$new_password/" {{app_attr.compose_paths}}
+sed -i "s/{{app_attr.db_password}}/$new_password/" {{app_attr.compose_path}}
+sed -i "s/{{app_attr.db_password}}/$new_password/" /credentials/password.txt
 {% endif %}
 
 docker-compose -f {{path}} up -d
