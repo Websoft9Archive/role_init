@@ -114,6 +114,7 @@ sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.tx
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
 sed -i "s/{{app_attr.admin_password}}/$new_password/" {{path}}
+sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
@@ -124,19 +125,18 @@ sed -i "s/{{app_attr.db_password}}/$new_password/" {{path}}
 {% endif %}
 
 {% if app_attr.compose_paths is defined and app_attr.compose_paths is not none %}
-{% for path in app_attr.compose_paths %}
 docker-compose -f {{path}} down -v
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
-sed -i "s/{{app_attr.admin_password}}/$new_password/" {{path}}
+sed -i "s/{{app_attr.admin_password}}/$new_password/" {{app_attr.compose_paths}}
+sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
-sed -i "s/{{app_attr.db_password}}/$new_password/" {{path}}
+sed -i "s/{{app_attr.db_password}}/$new_password/" {{app_attr.compose_paths}}
 {% endif %}
 
 docker-compose -f {{path}} up -d
-{% endfor %}
 {% endif %}
 
 {% if app_attr.commands is defined and app_attr.commands is not none %}
@@ -145,6 +145,5 @@ docker-compose -f {{path}} up -d
 {% endfor %}
 {% endif %}
 
-sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/" /credentials/password.txt
 {% endfor %}
 {% endif %}
