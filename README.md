@@ -57,7 +57,7 @@ Ansible Role: init_password
 
     init_db: 
       postgresql:
-        admin: root
+        admin: postgres
         users: ["wordpress","discuz"]
         password: "123456"
         service_before:
@@ -65,7 +65,7 @@ Ansible Role: init_password
     
     init_db: 
       postgresql:
-        admin: root
+        admin: postgres
         users: ["wordpress","discuz"]
         password: "123456"
         
