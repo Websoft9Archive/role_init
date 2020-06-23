@@ -22,6 +22,12 @@ sed -i "s/{{dbs.password}}/$new_password/" {{path}}
 {% endfor %}
 {% endif %}
 
+{% if dbs.commands is defined and dbs.commands is not none %}
+{% for cmd in dbs.commands %}
+{{cmd}}
+{% endfor %}
+{% endif %}
+
 {% endif %}
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
