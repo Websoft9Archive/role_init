@@ -3,6 +3,18 @@ init_db:
 init_application:
 init_docker:
 
+init_db_example: 
+  mysql:
+    admin: root
+    users: ["discuz"]
+    password: "123456"
+    service_before:
+    service_after:
+    config_paths:
+      - /data/wwwroot/discuz/upload/config/config_global_default.php
+    command:
+      - echo "hello world"
+
 # these meta data ony for inner coding, not for interface
 init_service_unit: 
   mysql:
