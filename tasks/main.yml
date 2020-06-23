@@ -9,7 +9,6 @@
       src: password.txt.jinja2
       dest: /credentials/password.txt
       mode: 644
-  when: init_db.docker is undefined
 
 - name: Copy Init Script
   template:
