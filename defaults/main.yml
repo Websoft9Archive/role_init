@@ -3,6 +3,7 @@ init_db:
 init_application:
 init_docker:
 
+# init_db sample for you
 init_db_example: 
   mysql:
     admin: root
