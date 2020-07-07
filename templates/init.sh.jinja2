@@ -17,22 +17,8 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 mysqladmin -u{{dbs_app_user}} -p{{dbs.password}} password $new_password
 {% endfor %}
 {% endif %}
-
-{% if dbs.config_paths is defined and dbs.config_paths is not none  %}
-{% for path in dbs.config_paths %}
-sed -i "s/{{dbs.password}}/$new_password/g" {{path}}
-{% endfor %}
-{% endif %}
-
-{% if dbs.commands is defined and dbs.commands is not none %}
-{% for cmd in dbs.commands %}
-{{cmd}}
-{% endfor %}
-{% endif %}
-
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
-
 
 {% if db_names == 'mongodb' %}
 sudo sh -c 'echo "init mongodb started at" $(date -d now)  1>> /tmp/init_debug.txt'
@@ -52,7 +38,6 @@ exit
 {% endif %}
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
-
 
 {% if db_names == 'postgresql' %}
 sudo sh -c 'echo "init postgresql started at" $(date -d now)  1>> /tmp/init_debug.txt'
@@ -84,6 +69,19 @@ ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 {% endfor %}
 {% endif %}
 sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
+{% endif %}
+
+
+{% if dbs.config_paths is defined and dbs.config_paths is not none  %}
+{% for path in dbs.config_paths %}
+sed -i "s/{{dbs.password}}/$new_password/g" {{path}}
+{% endfor %}
+{% endif %}
+
+{% if dbs.commands is defined and dbs.commands is not none %}
+{% for cmd in dbs.commands %}
+{{cmd}}
+{% endfor %}
 {% endif %}
 
 {% endfor %}
