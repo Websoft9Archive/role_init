@@ -8,7 +8,7 @@
     template:
       src: password.txt.jinja2
       dest: /credentials/password.txt
-      mode: 0640
+      mode: 0644
 
 - name: Copy Init Script
   template:
