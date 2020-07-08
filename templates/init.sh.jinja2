@@ -54,7 +54,6 @@ ALTER USER {{dbs_app_user}} WITH PASSWORD '${new_password}';
 sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
 
-
 {% if db_names == 'neo4j' %}
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo " 
@@ -70,7 +69,6 @@ ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 {% endif %}
 sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
 {% endif %}
-
 
 {% if dbs.config_paths is defined and dbs.config_paths is not none  %}
 {% for path in dbs.config_paths %}
