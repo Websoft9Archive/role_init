@@ -10,6 +10,7 @@
 
 ### Bug Fixes
 
+* 2020-07-09  set TimeoutSec=120s on init-password for adapt some application, e.g canvas init need 50s
 * 2020-05-20  abandon rc.local, use systemd
 * 2020-05-15  去掉MongoDB随机密码中等待10s的操作
 
