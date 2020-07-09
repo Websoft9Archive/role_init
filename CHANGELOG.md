@@ -2,9 +2,7 @@
 
 ## To do
 
-1. 优化数据结构
-2. 验证compose.yml随机密码
-3. mongodb init can't connect in service: AuthenticationFailed: SCRAM-SHA-1 authentication failed, storedKey mismatch
+1. mongodb init can't connect in service: AuthenticationFailed: SCRAM-SHA-1 authentication failed, storedKey mismatch
 
 ## Logs
 
@@ -16,5 +14,6 @@
 
 ### Features
 
+* 2020-06-25  add docker init
 * 2020-05-29  Optimize data construct, simplify the init_application
 * 2020-05-20  add init log to: /tmp/init_password.txt
