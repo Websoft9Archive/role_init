@@ -103,7 +103,7 @@ sed -i "s/{{app_attr.password}}/$new_password/g" {{path}}
 {% endfor %}
 {% endif %}
 
-sed -i "s/{{ app_name }} administrator Password: .*/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
+sed -i "s/{{ app_name }} administrator Password:.*/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
 {% endfor %}
 {% endif %}
 
