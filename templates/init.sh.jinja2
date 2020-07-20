@@ -110,6 +110,12 @@ sed -i "s/{{ app_name }} administrator Password:.*/{{ app_name }} administrator 
 {% endif %}
 
 #3 docker password init
+{% if app_attr.volumes is defined and app_attr.volumes is not none %}
+{% for volume in app_attr.volumes %}
+{{volume}}
+{% endfor %}
+{% endif %}
+
 {% if init_docker %}
 echo "docker init passwor!"  >> /tmp/init_debug.txt
 sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
