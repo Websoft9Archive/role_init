@@ -115,11 +115,7 @@ echo "docker init passwor!"  >> /tmp/init_debug.txt
 sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
 {% for app_name,app_attr in init_docker.items() %}
 
-{% if app_attr.volumes is defined and app_attr.volumes is not none %}
-{% for volume in app_attr.volumes %}
-rm -rf {{volume}}
-{% endfor %}
-{% endif %}
+
 
 {% if app_attr.config_paths is defined and app_attr.config_paths is not none %}
 {% for path in app_attr.config_paths %}
@@ -139,6 +135,12 @@ sed -i "s/{{app_attr.db_password}}/$new_password/g" /credentials/password.txt
 
 {% if app_attr.compose_path is defined and app_attr.compose_path is not none %}
 docker-compose -f {{app_attr.compose_path}} down -v
+
+{% if app_attr.volumes is defined and app_attr.volumes is not none %}
+{% for volume in app_attr.volumes %}
+rm -rf {{volume}}
+{% endfor %}
+{% endif %}
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
 sed -i "s/{{app_attr.admin_password}}/$new_password/g" {{app_attr.compose_path}}
