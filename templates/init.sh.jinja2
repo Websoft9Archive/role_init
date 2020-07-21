@@ -117,7 +117,7 @@ sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.tx
 
 {% if app_attr.volumes is defined and app_attr.volumes is not none %}
 {% for volume in app_attr.volumes %}
-{{volume}}
+rm -rf {{volume}}
 {% endfor %}
 {% endif %}
 
