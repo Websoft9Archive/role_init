@@ -132,14 +132,6 @@ rm -rf {{volume}}
 {% endfor %}
 {% endif %}
 
-{% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
-sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
-{% endif %}
-
-{% if app_attr.db_password is defined and app_attr.db_password is not none %}
-sed -i "s/database password {{app_attr.db_password}}/database password $new_password/g" /credentials/password.txt
-{% endif %}
-
 {% if app_attr.compose_commands is defined and app_attr.compose_commands is not none %}
 {% for cmd in app_attr.compose_commands %}
 {{cmd}}
