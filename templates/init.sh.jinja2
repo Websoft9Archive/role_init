@@ -139,6 +139,7 @@ rm -rf {{volume}}
 {% endif %}
 
 docker-compose -f {{app_attr.compose_path}} up -d
+sleep 20s
 {% endif %}
 
 {% if app_attr.commands is defined and app_attr.commands is not none %}
