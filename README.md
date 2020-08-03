@@ -127,7 +127,11 @@ Ansible Role: init_password
          config_paths: 
            - "/data/.awx/environment.sh"
            - "/data/.awx/credentials.py"
-         compose_path: "/data/.awx/docker-compose.yml"      
+         compose_path: "/data/.awx/docker-compose.yml"
+         compose_commands:
+           - echo "hello world"
+         commands:
+           - echo "hello world"
     ```
 
 ## Example
