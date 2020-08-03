@@ -150,6 +150,12 @@ sed -i "s/{{app_attr.db_password}}/$new_password/g" {{app_attr.compose_path}}
 sed -i "s/{{app_attr.db_password}}/$new_password/g" /credentials/password.txt
 {% endif %}
 
+{% if app_attr.compose_commands is defined and app_attr.compose_commands is not none %}
+{% for cmd in app_attr.compose_commands %}
+{{cmd}}
+{% endfor %}
+{% endif %}
+
 docker-compose -f {{app_attr.compose_path}} up -d
 {% endif %}
 
