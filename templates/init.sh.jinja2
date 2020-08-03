@@ -125,7 +125,7 @@ sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ 
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
 sed -i "s/{{app_attr.db_password}}/$new_password/g" {{path}}
-sed -i "s/{{app_attr.db_password}}/$new_password/g" /credentials/password.txt
+sed -i "s/database password {{app_attr.db_password}}/database password $new_password/g" /credentials/password.txt
 {% endif %}
 
 {% endfor %}
@@ -141,13 +141,11 @@ rm -rf {{volume}}
 {% endif %}
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
-sed -i "s/{{app_attr.admin_password}}/$new_password/g" {{app_attr.compose_path}}
 sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
-sed -i "s/{{app_attr.db_password}}/$new_password/g" {{app_attr.compose_path}}
-sed -i "s/{{app_attr.db_password}}/$new_password/g" /credentials/password.txt
+sed -i "s/database password {{app_attr.db_password}}/database password $new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.compose_commands is defined and app_attr.compose_commands is not none %}
