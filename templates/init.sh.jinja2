@@ -119,12 +119,10 @@ sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.tx
 {% for path in app_attr.config_paths %}
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
-sed -i "s/{{app_attr.admin_password}}/$new_password/g" {{path}}
 sed -i "s/{{ app_name }} administrator Password: {{app_attr.admin_password}}/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
-sed -i "s/{{app_attr.db_password}}/$new_password/g" {{path}}
 sed -i "s/database password {{app_attr.db_password}}/database password $new_password/g" /credentials/password.txt
 {% endif %}
 
