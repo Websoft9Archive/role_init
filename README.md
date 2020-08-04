@@ -116,22 +116,27 @@ Ansible Role: init_password
 4. 默认Docker应用管理员密码初始范例（此方案适用于修改Docker相关）
     ```
     init_docker:
-       awx:
-         admin_username: admin
-         admin_password: "password"
-         db: postgresql
-         db_name: awx
-         db_username: awx
-         db_password: "awxpass"
-         service_after: "docker.service"
-         config_paths: 
-           - "/data/.awx/environment.sh"
-           - "/data/.awx/credentials.py"
-         compose_path: "/data/.awx/docker-compose.yml"
-         compose_commands:
-           - echo "hello world"
-         commands:
-           - echo "hello world"
+      seafile:
+        admin_username: me@example.com
+        admin_password: "admin123"
+        db: mysql
+        db_name: seafile_db
+        db_username: root
+        db_password: "123456"
+        service_after: "docker.service"
+        compose_path: "/data/docker-compose.yml"
+        compose_commands:
+          - 'sed -i "s/MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$new_password/g" /data/docker-compose.yml'
+          - 'sed -i "s/DB_ROOT_PASSWD=.*/DB_ROOT_PASSWD=$new_password/g" /data/docker-compose.yml'
+          - 'sed -i "s/SEAFILE_ADMIN_PASSWORD=.*/SEAFILE_ADMIN_PASSWORD=$new_password/g" /data/docker-compose.yml'
+        volumes: 
+          - /opt/seafile-mysql
+          - /opt/seafile-data
+        commands: 
+          - sudo sh -c "cat /data/config/onlyoffice.conf 1>> /opt/seafile-data/seafile/conf/seahub_settings.py"
+          - sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/seahub_settings.py
+          - sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/ccnet.conf
+          - sudo docker restart seafile
     ```
 
 ## Example
