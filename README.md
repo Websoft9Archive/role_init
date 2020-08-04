@@ -1,7 +1,7 @@
 Ansible Role: init_password
 =========
 
-本 Role 用于在在 CentOS, Ubuntu 和 AmazonLinux 服务器上初始化数据库以及应用程序的随机密码
+本 Role 用于在 Cloud Installer 项目的随机密码处理，确保任何用户每一次安装都可以生成随机密码
 
 ## Requirements
 
