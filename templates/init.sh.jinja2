@@ -65,7 +65,7 @@ ${new_password}" | cypher-shell
 
 echo "
 ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
-" | cypher-shell -u {{dbs.admin}}  -p ${new_password} -d system
+" | cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}  -d system
 
 sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
 {% endif %}
