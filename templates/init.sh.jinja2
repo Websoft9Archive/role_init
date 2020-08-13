@@ -57,6 +57,7 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if db_names == 'neo4j' %}
+systemctl restart nginx
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo " 
 {{dbs.admin}}
