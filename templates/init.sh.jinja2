@@ -2,7 +2,6 @@
 new_password=$(pwgen -ncCs 15 1)
 sleep 10s
 sudo sh -c 'echo "init-password started at" $(date -d now)  1>> /tmp/init_debug.txt'
-echo $new_password  >> /tmp/init_debug.txt
 
 #1 database password init
 {% if init_db %}
