@@ -27,12 +27,12 @@
     enabled: yes
 
 - block: 
-  - name: Judge file is empty
+  - name: Check init password, if /credentials/* file not exist or no content, stop and exit Ansible
     shell: |
       [  -s /credentials/password.txt ] && [  -s /credentials/init.sh ] && init_initpasswd=true || init_initpasswd=false
       echo $init_initpasswd
-    register: init_initpasswd_check
+    register: init_password_check
 
-  - name: Check php_initpasswd, if initpass is null or initpasswd file is not exist , stop and exit
+  - name: Output error when init password fail
     fail: msg="init_password role is not done,exit!"
-    when: init_initpasswd_check.stdout == "false"
+    when: init_password_check.stdout == "false"
