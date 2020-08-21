@@ -21,18 +21,18 @@
     src: init-password.service.jinja2
     dest: /lib/systemd/system/init-password.service
 
-- name: Judge file is empty
-  shell: |
-    [  -s /credentials/password.txt ] && [  -s /credentials/init.sh ] && init_initpasswd=true || init_initpasswd=false
-    echo $init_initpasswd
-  register: init_initpasswd
-  
-# if initpass is null or initpasswd file is not exist , stop and exit
-- name: Check php_initpasswd
-  fail: msg="init_password role is not done,exit!"
-  when: init_initpasswd.stdout == "false"
-    
 - name: Enable service
   service:
     name: init-password
     enabled: yes
+
+- block: 
+  - name: Judge file is empty
+    shell: |
+      [  -s /credentials/password.txt ] && [  -s /credentials/init.sh ] && init_initpasswd=true || init_initpasswd=false
+      echo $init_initpasswd
+    register: init_initpasswd
+
+  - name: Check php_initpasswd, if initpass is null or initpasswd file is not exist , stop and exit
+    fail: msg="init_password role is not done,exit!"
+    when: init_initpasswd.stdout == "false"
