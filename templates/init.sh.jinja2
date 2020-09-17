@@ -126,7 +126,7 @@ docker-compose -f {{app_attr.compose_path}} down -v
 
 {% if app_attr.volumes is defined and app_attr.volumes is not none %}
 {% for volume in app_attr.volumes %}
-rm -rf {{volume}}
+sudo rm -rf {{volume}}
 {% endfor %}
 {% endif %}
 
