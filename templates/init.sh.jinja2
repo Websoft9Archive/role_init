@@ -18,7 +18,7 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 mysqladmin -u{{dbs_app_user}} -p{{dbs.password}} password $new_password
 {% endfor %}
 {% endif %}
-sduo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
+sudo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if db_names == 'mongodb' %}
