@@ -1,6 +1,6 @@
 #!/bin/bash
 new_password=$(pwgen -ncCs 15 1)
-sleep 10s
+sudo sleep 10s
 sudo sh -c 'echo "init-password started at" $(date -d now)  1>> /tmp/init_debug.txt'
 
 #1 database password init
@@ -18,7 +18,7 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 mysqladmin -u{{dbs_app_user}} -p{{dbs.password}} password $new_password
 {% endfor %}
 {% endif %}
-sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
+sduo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if db_names == 'mongodb' %}
@@ -37,7 +37,7 @@ exit
 " | mongo admin -u {{dbs_app_user}} -p {{dbs.password}}
 {% endfor %}
 {% endif %}
-sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
+sudo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if db_names == 'postgresql' %}
@@ -56,7 +56,7 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if db_names == 'neo4j' %}
-systemctl restart nginx
+sudo systemctl restart nginx
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 echo " 
 {{dbs.admin}}
@@ -67,12 +67,12 @@ echo "
 ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 " | cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}  -d system
 
-sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
+sudo sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if dbs.config_paths is defined and dbs.config_paths is not none  %}
 {% for path in dbs.config_paths %}
-sed -i "s/{{dbs.password}}/$new_password/g" {{path}}
+sudo sed -i "s/{{dbs.password}}/$new_password/g" {{path}}
 {% endfor %}
 {% endif %}
 
@@ -93,7 +93,7 @@ sudo sh -c 'echo "init application started at" $(date -d now)  1>> /tmp/init_deb
 
 {% if app_attr.config_paths is defined and app_attr.config_paths is not none %}
 {% for path in app_attr.config_paths %}
-sed -i "s/{{app_attr.password}}/$new_password/g" {{path}}
+sudo sed -i "s/{{app_attr.password}}/$new_password/g" {{path}}
 {% endfor %}
 {% endif %}
 
@@ -103,7 +103,7 @@ sed -i "s/{{app_attr.password}}/$new_password/g" {{path}}
 {% endfor %}
 {% endif %}
 
-sed -i "s/{{ app_name }} administrator Password:.*/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
+sudo sed -i "s/{{ app_name }} administrator Password:.*/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
 {% endfor %}
 {% endif %}
 
@@ -114,15 +114,15 @@ sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.tx
 {% for app_name,app_attr in init_docker.items() %}
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
-sed -i "s/{{ app_name }} administrator Password: .*/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
+sudo sed -i "s/{{ app_name }} administrator Password: .*/{{ app_name }} administrator Password: $new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.db_password is defined and app_attr.db_password is not none %}
-sed -i "s/database password:.*/database password:$new_password/g" /credentials/password.txt
+sudo sed -i "s/database password:.*/database password:$new_password/g" /credentials/password.txt
 {% endif %}
 
 {% if app_attr.compose_path is defined and app_attr.compose_path is not none %}
-docker-compose -f {{app_attr.compose_path}} down -v
+sudo docker-compose -f {{app_attr.compose_path}} down -v
 
 {% if app_attr.volumes is defined and app_attr.volumes is not none %}
 {% for volume in app_attr.volumes %}
@@ -136,8 +136,8 @@ sudo rm -rf {{volume}}
 {% endfor %}
 {% endif %}
 
-docker-compose -f {{app_attr.compose_path}} up -d
-sleep 20s
+sudo docker-compose -f {{app_attr.compose_path}} up -d
+sudo sleep 20s
 {% endif %}
 
 {% if app_attr.commands is defined and app_attr.commands is not none %}
