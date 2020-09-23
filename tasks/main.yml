@@ -4,7 +4,7 @@
       path: /credentials
       state: directory
 
-  - name: Write Databases Password
+  - name: Upload Databases Password
     template:
       src: password.txt.jinja2
       dest: /credentials/password.txt
