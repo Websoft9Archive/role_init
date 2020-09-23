@@ -1,5 +1,5 @@
 [Unit]
-Description=Init Password for image
+Description=Init image powered by Websoft9
 After=network.target systemd-networkd-wait-online.service
 {##############  init databases ##############}
 {% if init_db %}
@@ -45,7 +45,7 @@ After={{docker_attr.service_after}}
 Type=simple
 TimeoutSec=120s
 ExecStart=-/bin/bash /credentials/init.sh
-ExecStartPost=/bin/systemctl disable init-password
+ExecStartPost=/bin/systemctl disable init-apps
 User=root
 Group=root
 
