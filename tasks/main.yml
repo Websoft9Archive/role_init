@@ -16,23 +16,23 @@
     dest: /credentials/init.sh
     mode: 0750
     
-- name: Copy init_password.service
+- name: Upload init-apps.service
   template:
-    src: init-password.service.jinja2
-    dest: /lib/systemd/system/init-password.service
+    src: init-apps.service.jinja2
+    dest: /lib/systemd/system/init-apps.service
 
 - name: Enable service
   service:
-    name: init-password
+    name: init-apps
     enabled: yes
 
 - block: 
-  - name: Check init password, if /credentials/* file not exist or no content, stop and exit Ansible
+  - name: Check init, if /credentials/* file not exist or no content, stop and exit Ansible
     shell: |
       [  -s /credentials/password.txt ] && [  -s /credentials/init.sh ] && init_initpasswd=true || init_initpasswd=false
       echo $init_initpasswd
-    register: init_password_check
+    register: init_check
 
-  - name: Output error when init password fail
-    fail: msg="init_password role is not done,exit!"
-    when: init_password_check.stdout == "false"
+  - name: Output error when init.sh fail
+    fail: msg="init role is not done,exit!"
+    when: init_check.stdout == "false"
