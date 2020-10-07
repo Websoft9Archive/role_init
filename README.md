@@ -89,8 +89,8 @@ Ansible Role: init_password
           - /data/wwwroot/wordpress/wp-config.php
           - /data/wwwroot/wordpress/wp-config2.php
         commands: 
-          - wp change -u default_account -p default_password to $new_password
-          - systemctl restart xxxx  
+          - sudo wp change -u default_account -p default_password to $new_password
+          - sudo systemctl restart xxxx  
           
        discuz:   
          username: admin
@@ -101,8 +101,8 @@ Ansible Role: init_password
             - /data/wwwroot/wordpress/wp-config.php
             - /data/wwwroot/wordpress/wp-config3.php
          commands: 
-            - wp change -u default_account -p default_password to $new_password
-            - systemctl restart xxxx  
+            - sudo wp change -u default_account -p default_password to $new_password
+            - sudo systemctl restart xxxx  
        
     init_application:
       grafana:
@@ -111,7 +111,7 @@ Ansible Role: init_password
         service_before:
         service_after: grafana-server
         commands: 
-          - grafana-cli admin reset-admin-password $new_password        
+          - sudo grafana-cli admin reset-admin-password $new_password        
     ```
 4. 默认Docker应用管理员密码初始范例（此方案适用于修改Docker相关）
     ```
@@ -126,16 +126,16 @@ Ansible Role: init_password
         service_after: "docker.service"
         compose_path: "/data/docker-compose.yml"
         compose_commands:
-          - 'sed -i "s/MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$new_password/g" /data/docker-compose.yml'
-          - 'sed -i "s/DB_ROOT_PASSWD=.*/DB_ROOT_PASSWD=$new_password/g" /data/docker-compose.yml'
-          - 'sed -i "s/SEAFILE_ADMIN_PASSWORD=.*/SEAFILE_ADMIN_PASSWORD=$new_password/g" /data/docker-compose.yml'
+          - 'sudo sed -i "s/MYSQL_ROOT_PASSWORD=.*/MYSQL_ROOT_PASSWORD=$new_password/g" /data/docker-compose.yml'
+          - 'sudo sed -i "s/DB_ROOT_PASSWD=.*/DB_ROOT_PASSWD=$new_password/g" /data/docker-compose.yml'
+          - 'sudo sed -i "s/SEAFILE_ADMIN_PASSWORD=.*/SEAFILE_ADMIN_PASSWORD=$new_password/g" /data/docker-compose.yml'
         volumes: 
           - /opt/seafile-mysql
           - /opt/seafile-data
         commands: 
-          - sudo sh -c "cat /data/config/onlyoffice.conf 1>> /opt/seafile-data/seafile/conf/seahub_settings.py"
-          - sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/seahub_settings.py
-          - sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/ccnet.conf
+          - sudo sudo sh -c "cat /data/config/onlyoffice.conf 1>> /opt/seafile-data/seafile/conf/seahub_settings.py"
+          - sudo sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/seahub_settings.py
+          - sudo sed -i "s/seafile.example.com/$(curl ifconfig.me)/g" /opt/seafile-data/seafile/conf/ccnet.conf
           - sudo docker restart seafile
     ```
 
