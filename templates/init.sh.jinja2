@@ -58,14 +58,22 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% if db_names == 'neo4j' %}
 sudo systemctl restart nginx
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
+
 echo " 
 {{dbs.admin}}
 {{dbs.password}} 
 ${new_password}" | cypher-shell
 
+neo4j_version=$(neo4j version |awk '{print $2}' |cut -b1-3)
+{% if neo4j_version == '3.5' %}
+echo " 
+CALL dbms.changePassword('${new_password}');
+" | cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}
+{% else %}
 echo "
 ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 " | cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}  -d system
+{% endif %}
 
 sudo sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
 {% endif %}
