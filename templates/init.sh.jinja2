@@ -135,6 +135,7 @@ sudo sh -c 'echo "init application ended at" $(date -d now)  1>> /tmp/init_debug
 #3 docker password init
 {% if init_docker %}
 sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
+sudo systemctl start docker
 {% for app_name,app_attr in init_docker.items() %}
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
