@@ -15,10 +15,10 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 
 {% if dbs.users is defined and dbs.users is not none %}
 {% for dbs_app_user in dbs.users %}
-{% if dbs_app_user.host is defined and dbs_app_user.host is not none %}
-mysqladmin -u{{dbs_app_user.name}} -p{{dbs.password}} -h {{dbs_app_user.host}} password $new_password
-{% else %}
-mysqladmin -u{{dbs_app_user}} -p{{dbs.password}} password $new_password
+{% if dbs_app_user.host is defined %}
+echo "
+SET PASSWORD FOR {{dbs_app_user}} = PASSWORD('$new_password');
+" |mysql -uroot -p$new_password
 {% endif %}
 {% endfor %}
 {% endif %}
