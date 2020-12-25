@@ -1,5 +1,5 @@
 #!/bin/bash
-new_password=$(pwgen -nscCy -r "()[]<>,#{}\`\\'\"|/" 15 1)
+new_password=$(pwgen -ncCs 15 1)
 sudo sleep 10s
 sudo sh -c 'echo "init-password started at" $(date -d now)  1>> /tmp/init_debug.txt'
 
