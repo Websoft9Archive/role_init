@@ -76,6 +76,17 @@ Ansible Role: init_password
         password: "123456"  
         config_paths:
           - /data/wwwroot/discuz/upload/config/config_global_default.php
+          
+    init_db: 
+      mysql:
+        admin: root
+        users: ["discuz"]
+        password: "123456"  
+        config_paths:
+          - /data/wwwroot/discuz/upload/config/config_global_default.php
+        commands:
+          - sudo wp change -u default_account -p default_password to $new_password
+          - sudo systemctl restart xxxx 
     ```
 3. 默认应用管理员密码初始范例（此方案只适用于修改文件）
     ```
