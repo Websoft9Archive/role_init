@@ -18,6 +18,10 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 echo "
 SET PASSWORD FOR {{dbs_app_user}} = PASSWORD('$new_password');
 " |mysql -uroot -p$new_password
+
+echo "
+SET PASSWORD FOR {{dbs_app_user}}@localhost = PASSWORD('$new_password');
+" |mysql -uroot -p$new_password
 {% endfor %}
 {% endif %}
 sudo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
