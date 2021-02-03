@@ -82,7 +82,7 @@ echo "
 ${new_password}" | cypher-shell
 
 neo4j_version=$(neo4j version |awk '{print $2}' |cut -b1-3)
-{% if neo4j_version == '3.5' %}
+{% if neo4j_version <= '3.5' %}
 echo " 
 CALL dbms.changePassword('${new_password}');
 " | cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}
