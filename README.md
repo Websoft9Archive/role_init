@@ -127,6 +127,15 @@ Ansible Role: init
 4. 默认Docker应用管理员密码初始范例（此方案适用于修改Docker相关）
     ```
     init_docker:
+      pgadmin:
+        admin_username: user@domain.com
+        admin_password: "SuperSecret"
+        service_after: "docker.service"
+        compose_path: "/data/apps/pgadmin/docker-compose.yml"
+        compose_commands:
+          - sudo sed -i "s/SuperSecret/$new_password/g" /data/apps/pgadmin/docker-compose.yml
+        
+    init_docker:
       seafile:
         admin_username: me@example.com
         admin_password: "admin123"
