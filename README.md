@@ -1,4 +1,4 @@
-Ansible Role: init_password
+Ansible Role: init
 =========
 
 本 Role 用于在 Cloud Installer 项目的随机密码处理，确保任何用户每一次安装都可以生成随机密码
