@@ -17,11 +17,11 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 {% for dbs_app_user in dbs.users %}
 {% if mysql_version == '8.0' %}
 echo "
-SET PASSWORD FOR {{dbs_app_user}} = $new_password;
+SET PASSWORD FOR {{dbs_app_user}} = '$new_password';
 " |mysql -uroot -p$new_password
 
 echo "
-SET PASSWORD FOR {{dbs_app_user}}@localhost = $new_password;
+SET PASSWORD FOR {{dbs_app_user}}@localhost = '$new_password';
 " |mysql -uroot -p$new_password
 {% else %}
 echo "
