@@ -13,10 +13,9 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h ::1 password $new_password
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h 127.0.0.1 password $new_password
 mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_password
 
-mysqlversion=$(mysql --version |awk '{print $3}' |cut -b1-3)
 {% if dbs.users is defined and dbs.users is not none %}
 {% for dbs_app_user in dbs.users %}
-{% if mysqlversion == '8.0' %}
+{% if mysql_version == '8.0' %}
 echo "
 SET PASSWORD FOR {{dbs_app_user}} = $new_password;
 " |mysql -uroot -p$new_password
@@ -93,7 +92,6 @@ echo "
 {{dbs.password}} 
 ${new_password}" | cypher-shell
 
-neo4j_version=$(neo4j version |awk '{print $2}' |cut -b1-3)
 {% if neo4j_version <= '3.5' %}
 echo " 
 CALL dbms.changePassword('${new_password}');
