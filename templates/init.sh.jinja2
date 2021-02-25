@@ -95,6 +95,10 @@ ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 sudo sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
 {% endif %}
 
+{% if db_names == 'redis' %}
+sudo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
+{% endif %}
+
 {% if dbs.config_paths is defined and dbs.config_paths is not none  %}
 {% for path in dbs.config_paths %}
 sudo sed -i "s/{{dbs.password}}/$new_password/g" {{path}}
