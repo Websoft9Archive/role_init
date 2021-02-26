@@ -88,8 +88,8 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 
 # wait neo4j service started
-while [[ $(systemctl is-active neo4j) == "inactive" ]]; do  sleep 3; done
-
+while [[ $(systemctl is-active neo4j) == "inactive" ]]; do  sleep 1; done
+sleep 10
 {% if neo4j_version <= '3.5' %}
 echo " 
 CALL dbms.changePassword('${new_password}');
