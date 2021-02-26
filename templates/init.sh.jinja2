@@ -89,11 +89,6 @@ sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt
 
 # wait neo4j service started
 while [[ $(systemctl is-active neo4j) == "inactive" ]]; do  sleep 3; done
-<<<<<<< HEAD
-neo4j_version=$(neo4j version |awk '{print $2}' |cut -b1-3)
-=======
-
->>>>>>> origin/main
 {% if neo4j_version <= '3.5' %}
 echo " 
 CALL dbms.changePassword('${new_password}');
