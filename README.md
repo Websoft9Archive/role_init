@@ -1,4 +1,4 @@
-Ansible Role: init_password
+Ansible Role: init
 =========
 
 本 Role 用于在 Cloud Installer 项目的随机密码处理，确保任何用户每一次安装都可以生成随机密码
@@ -126,6 +126,15 @@ Ansible Role: init_password
     ```
 4. 默认Docker应用管理员密码初始范例（此方案适用于修改Docker相关）
     ```
+    init_docker:
+      pgadmin:
+        admin_username: user@domain.com
+        admin_password: "SuperSecret"
+        service_after: "docker.service"
+        compose_path: "/data/apps/pgadmin/docker-compose.yml"
+        compose_commands:
+          - sudo sed -i "s/SuperSecret/$new_password/g" /data/apps/pgadmin/docker-compose.yml
+        
     init_docker:
       seafile:
         admin_username: me@example.com
