@@ -160,8 +160,10 @@ sudo sed -i "s/database password:.*/database password:$new_password/g" /credenti
 {% endif %}
 
 {% if app_attr.compose_path is defined and app_attr.compose_path is not none %}
+{% if app_attr.down is not defined %}
 sudo docker-compose -f {{app_attr.compose_path}} down -v
 sudo sleep 20s
+{% endif %}
 
 {% if app_attr.volumes is defined and app_attr.volumes is not none %}
 {% for volume in app_attr.volumes %}
