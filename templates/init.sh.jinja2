@@ -88,8 +88,8 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 
 # wait neo4j service started
-do 
-{ 
+while [ $? -eq 0 ]
+do
 {% if neo4j_version <= '3.5' %}
 echo " 
 CALL dbms.changePassword('${new_password}');
@@ -99,9 +99,8 @@ echo "
 ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 " | cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}  -d system
 {% endif %}
-cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}  -d system
-} 
-while [ $? -eq 0 ];
+echo ":exit" |cypher-shell -u neo4j  -p neo4j  -d system
+done
 
 sudo sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
 {% endif %}
