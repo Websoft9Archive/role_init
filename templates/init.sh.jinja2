@@ -99,7 +99,9 @@ echo "
 ALTER CURRENT USER SET PASSWORD FROM '{{dbs.password}}' TO '${new_password}';
 " | cypher-shell -u {{dbs.admin}}  -p {{dbs.password}}  -d system
 {% endif %}
+if [[ $(systemctl is-active neo4j) == "inactive" ]];then
 echo ":exit" |cypher-shell -u neo4j  -p neo4j  -d system
+fi
 done
 
 sudo sed -i "s/neo4j administrator password:{{dbs.password}}/neo4j administrator password:$new_password/g" /credentials/password.txt
