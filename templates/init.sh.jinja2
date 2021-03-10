@@ -88,10 +88,8 @@ sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 sudo sh -c 'echo "init neo4j started at" $(date -d now)  1>> /tmp/init_debug.txt'
 
 # wait neo4j service started
-while [[ $(systemctl is-active neo4j) == "inactive" ]]
-do  
-  sleep 20
-done
+sleep 60
+
 while [ $? -eq 0 ]
 do
   {% if neo4j_version <= '3.5' %}
