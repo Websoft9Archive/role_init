@@ -18,19 +18,19 @@ mysqladmin -u{{dbs.admin}} -p{{dbs.password }} -h localhost password $new_passwo
 {% if mysql_version == '8.0' %}
 echo "
 SET PASSWORD FOR {{dbs_app_user}} = '$new_password';
-" |mysql -uroot -p$new_password
+" |mysql -uroot -p$new_password -h 127.0.0.1
 
 echo "
 SET PASSWORD FOR {{dbs_app_user}}@localhost = '$new_password';
-" |mysql -uroot -p$new_password
+" |mysql -uroot -p$new_password -h 127.0.0.1
 {% else %}
 echo "
 SET PASSWORD FOR {{dbs_app_user}} = PASSWORD('$new_password');
-" |mysql -uroot -p$new_password
+" |mysql -uroot -p$new_password -h 127.0.0.1
 
 echo "
 SET PASSWORD FOR {{dbs_app_user}}@localhost = PASSWORD('$new_password');
-" |mysql -uroot -p$new_password
+" |mysql -uroot -p$new_password -h 127.0.0.1
 {% endif %}
 
 {% endfor %}
