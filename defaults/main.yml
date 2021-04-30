@@ -20,7 +20,7 @@ init_db_example:
 init_service_unit: 
   mysql:
     before: 
-    after: mysqld.service
+    after: mysql.service
   mariadb:
     before: 
     after: mysqld.service
