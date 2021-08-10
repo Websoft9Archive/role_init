@@ -60,7 +60,7 @@ sudo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
 {% if db_names == 'rethinkdb' %}
 sudo sh -c 'echo "init rethinkdb started at" $(date -d now)  1>> /tmp/init_debug.txt'
 sudo echo $new_password | sudo tee /tmp/pw
-rethinkdb repl --pass-file /tmp/pw
+rethinkdb repl --password-file /tmp/pw
 {% if dbs.users is defined and dbs.users is not none %}
 {% for dbs_app_user in dbs.users %}
 echo  "r.db('rethinkdb').table('users').get('{{dbs_app_user}}').update({'password': '$new_password'}).run()" | rethinkdb-repl --pass-file /tmp/pw
