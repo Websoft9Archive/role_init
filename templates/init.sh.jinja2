@@ -67,6 +67,7 @@ echo  "r.db('rethinkdb').table('users').get('{{dbs_app_user}}').update({'passwor
 {% endfor %}
 {% endif %}
 sudo sed -i "s/{{dbs.password}}/$new_password/g" /credentials/password.txt
+sudo rm -f /tmp/pw
 {% endif %}
 
 
