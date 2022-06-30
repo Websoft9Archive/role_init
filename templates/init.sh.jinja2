@@ -156,7 +156,6 @@ sudo sh -c 'echo "init application ended at" $(date -d now)  1>> /tmp/init_debug
 {% if init_docker %}
 sudo sh -c 'echo "init docker started at" $(date -d now)  1>> /tmp/init_debug.txt'
 sudo systemctl restart docker
-docker-compose -h >> /tmp/test
 {% for app_name,app_attr in init_docker.items() %}
 
 {% if app_attr.admin_password is defined and app_attr.admin_password is not none %}
@@ -169,7 +168,7 @@ sudo sed -i "s/database password:.*/database password:$new_password/g" /credenti
 
 {% if app_attr.compose_path is defined and app_attr.compose_path is not none %}
 {% if app_attr.compose_down is not defined or app_attr.compose_down == True %}
-sudo docker-compose -f {{app_attr.compose_path}} down -v
+sudo docker compose -f {{app_attr.compose_path}} down -v
 sudo sleep 20s
 {% endif %}
 
@@ -185,7 +184,7 @@ sudo rm -rf {{volume}}
 {% endfor %}
 {% endif %}
 
-sudo docker-compose -f {{app_attr.compose_path}} up -d --no-recreate
+sudo docker compose -f {{app_attr.compose_path}} up -d --no-recreate
 sudo sleep 20s
 {% endif %}
 
